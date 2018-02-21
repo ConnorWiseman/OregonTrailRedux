@@ -10,31 +10,9 @@ import java.io.IOException;
  * @author Connor
  */
 public abstract class Input {
-    private final static BufferedReader INPUT =
+    private final static BufferedReader IN =
             new BufferedReader(new InputStreamReader(System.in));
 
-    /**
-     * Prompts for a string of input.
-     * @param text
-     * @return
-     * @throws IOException
-     */
-    private static String promptForString(String text) throws IOException {
-        String input = null;
-
-        // Continue prompting for input as long as the input is null or empty.
-        while(input == null || input.isEmpty()) {
-            Output.print(" > " + text);
-            input = Input.INPUT.readLine().trim();
-            
-            if (input.length() < 1) {
-                Output.println("Invalid input - please enter something.");
-            }
-        }
-
-        return input;
-    }
-    
     /**
      * Prompts for a string of input, then returns only the first character.
      * @param prompt
@@ -42,7 +20,7 @@ public abstract class Input {
      * @throws IOException
      */
     public static char getChar(String prompt) throws IOException {
-        return Input.promptForString(prompt).charAt(0);
+        return Input.getString(prompt).charAt(0);
     }
     
     /**
@@ -57,12 +35,12 @@ public abstract class Input {
         
         // Continue prompting for input as long as it is not a valid integer string.
         while (!valid) {
-            String input = Input.promptForString(prompt);
+            String input = Input.getString(prompt);
             
             try {
                 result = Integer.parseInt(input);
                 valid  = true;
-            } catch(NumberFormatException error) {
+            } catch(NumberFormatException e) {
                 Output.println("Invalid input - please enter an integer.");
             }
         }
@@ -77,9 +55,18 @@ public abstract class Input {
      * @throws IOException
      */
     public static String getString(String prompt) throws IOException {
-        return Input.promptForString(prompt);
+        String input = null;
+
+        // Continue prompting for input as long as the input is null or empty.
+        while(input == null || input.isEmpty()) {
+            Output.print(" > " + prompt);
+            input = Input.IN.readLine().trim();
+            
+            if (input.length() < 1) {
+                Output.println("Invalid input - please enter something.");
+            }
+        }
+
+        return input;
     }
 }
-
-
-

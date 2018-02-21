@@ -1,13 +1,13 @@
 package byui.cit260.oregontrailredux.view;
 
+import byui.cit260.oregontrailredux.control.ViewControl;
+
 import byui.cit260.oregontrailredux.model.Game;
 
 public class HelpMenu extends Menu implements ViewInterface {
-    public HelpMenu(ViewStack views) {
-        super(views);
-        
+    public HelpMenu() {
         this.title = "Help";
-        this.addItem('Q', "Quit");
+        this.addEntry('Q', "Quit");
     }
     
     @Override
@@ -15,7 +15,7 @@ public class HelpMenu extends Menu implements ViewInterface {
         switch (choice) {
             case 'Q':
                 Output.println("Quitting help menu...");
-                this.views.pop();
+                ViewControl.quitCurrentView();
                 break;
             default:
                 Output.println(Menu.INVALID_CHOICE);

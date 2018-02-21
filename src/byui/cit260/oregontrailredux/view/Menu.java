@@ -1,47 +1,48 @@
 package byui.cit260.oregontrailredux.view;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
+/**
+ * The base class from which all Menus are derived.
+ * @author Connor
+ */
 public abstract class Menu implements ViewInterface {
+    // Class constants. Used for formatting the appearance of all menus.
     private static final int    MAX_WIDTH = 32;
     private static final char   H_SYMBOL  = '-';
     private static final char   V_SYMBOL  = '|';
     private static final String DIVIDER   = " - ";
     
-    protected static String INVALID_CHOICE = "\nInvalid selection. Please try again.";
+    // The message dislayed when users select an invalid menu option.
+    protected static String INVALID_CHOICE = "\nInvalid selection.";
+
+    // Class members.
+    protected final ArrayList<Entry<Character, String>> entries;
+    protected       String                              title;
     
-    protected final ArrayList<MenuItem> items;
-    protected final ViewStack views;
-    
-    protected String title;
-    
-    public Menu(ViewStack views) {
-        this.items = new ArrayList<>();
-        this.views = views;
-        }
-    
-    protected final void addItem(char symbol, String label) {
-        this.items.add(new MenuItem(symbol, label));
+    /**
+     * Instantiates the ArrayList of menu entries.
+     */
+    public Menu() {
+        this.entries = new ArrayList<>();
     }
     
-    protected final void goToView(String target) {
-        try {
-            Class c = Class.forName("byui.cit260.oregontrailredux.view." + target);
-            Constructor ctor = c.getConstructor(ViewStack.class);
-            ViewInterface view = (ViewInterface) ctor.newInstance(this.views);
-            
-            this.views.push(view);
-        } catch (Exception e) {
-            Output.error(e.toString());
-        }
-    }
-    
-    protected final void quit() {
-        this.views.pop();
+    /**
+     * Adds a menu entry to this Menu.
+     * @param symbol
+     * @param label
+     */
+    protected final void addEntry(char symbol, String label) {
+        this.entries.add(new SimpleEntry<>(symbol, label));
     }
 
+    /**
+     * Prompts the user for an option from this Menu's menu entries.
+     * @return 
+     */
     @Override
     public char getInput() {
         char input = 0;
@@ -49,22 +50,22 @@ public abstract class Menu implements ViewInterface {
         try {
             input = Character.toUpperCase(Input.getChar("Select an option: "));
         } catch (IOException e) {
-            Output.error(e.toString());
+            Output.printError(e.toString());
         }
         
         return input;
     }
-    
+
+    /**
+     * Displays this Menu using the Formatter class.
+     */
     @Override
     public void display() {
-        int numItems   = this.items.size();
-        String[] lines = new String[numItems];
-        
-        for (int i = 0; i < numItems; i++) {
-            MenuItem current = this.items.get(i);
-            lines[i] = current.symbol + Menu.DIVIDER + current.label;
-        }
-   
-        Formatter.displayMenu(Menu.MAX_WIDTH, Menu.H_SYMBOL, Menu.V_SYMBOL, title, lines);
+        String[] menuEntries = this.entries.stream()
+                .map(e -> e.getKey() + Menu.DIVIDER + e.getValue())
+                .toArray(String[]::new);
+
+        Formatter.displayMenu(Menu.MAX_WIDTH, Menu.H_SYMBOL, Menu.V_SYMBOL,
+                title, menuEntries);
     }
 }

@@ -1,6 +1,5 @@
 package byui.cit260.oregontrailredux.view;
 
-// import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
@@ -9,31 +8,33 @@ import java.io.PrintWriter;
  * @author Connor
  */
 public abstract class Output {
-    // private final static PrintStream CONSOLE = System.out;
-    private final static PrintWriter CONSOLE = new PrintWriter(System.out, true);
+    private final static PrintWriter OUT = new PrintWriter(System.out, true);
 
     /**
      * Prints text.
+     * @param <T>
      * @param text
      */
-    public static void print(String text) {
-        Output.CONSOLE.print(text);
-        Output.CONSOLE.flush();
+    public static <T> void print(T text) {
+        Output.OUT.print(text);
+        Output.OUT.flush();
     }
     
     /**
      * Prints text followed by a new line.
+     * @param <T>
      * @param text
      */
-    public static void println(String text) {
-        Output.CONSOLE.println(text);
+    public static <T> void println(T text) {
+        Output.OUT.println(text);
     }
     
     /**
      * Prints error text in red followed by a new line.
+     * @param <T>
      * @param text
      */
-    public static void error(String text) {
+    public static <T> void printError(T text) {
         Output.println("\u001B[31m" + text + "\u001B[31m");
     }
 }

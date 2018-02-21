@@ -1,16 +1,16 @@
 package byui.cit260.oregontrailredux.view;
 
+import byui.cit260.oregontrailredux.control.ViewControl;
+
 import byui.cit260.oregontrailredux.model.Game;
 
-public class MainMenu extends Menu implements ViewInterface {
-    public MainMenu(ViewStack views) {
-        super(views);
-        
-        this.title = "Main Menu";
-        this.addItem('N', "New game");
-        this.addItem('L', "Load game");
-        this.addItem('H', "Help");
-        this.addItem('Q', "Quit");
+public class GameMenu extends Menu implements ViewInterface {
+    public GameMenu() {     
+        this.title = "Game Menu";
+        this.addEntry('N', "New game");
+        this.addEntry('L', "Load game");
+        this.addEntry('H', "Help");
+        this.addEntry('Q', "Quit");
     }
     
     @Override
@@ -24,11 +24,11 @@ public class MainMenu extends Menu implements ViewInterface {
                 break;
             case 'H':
                 Output.println("Help!");
-                this.goToView("HelpMenu");
+                ViewControl.goToView("HelpMenu");
                 break;
             case 'Q':
                 Output.println("Quitting the " + this.title + "...");
-                this.quit();
+                ViewControl.quitCurrentView();
                 break;
             default:
                 Output.println(Menu.INVALID_CHOICE);
