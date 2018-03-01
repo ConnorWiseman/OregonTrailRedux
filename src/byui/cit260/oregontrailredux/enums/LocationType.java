@@ -7,15 +7,24 @@ package byui.cit260.oregontrailredux.enums;
  * and geographical accuracy.
  * @author Connor
  */
-public enum LocationDefinition {
-    NAUVOO("Nauvoo", "The home of the Saints in Illinois.", 0),
-    SALT_LAKE_VALLEY("Salt Lake Valley", "The home of the Saints in the wilderness", 1300);
+public enum LocationType {
+    NAUVOO(
+            "Nauvoo",
+            "The home of the Saints in Illinois.",
+            0
+    ),
+    SALT_LAKE_VALLEY(
+            "Salt Lake Valley",
+            "The home of the Saints in the wilderness",
+            1300
+    );
 
     public final String name;
     public final String description;
     public final int    distance;
     
-    LocationDefinition(String name, String description, int distance) {
+    LocationType(final String name, final String description,
+            final int distance) {
         this.name        = name;
         this.description = description;
         this.distance    = distance;

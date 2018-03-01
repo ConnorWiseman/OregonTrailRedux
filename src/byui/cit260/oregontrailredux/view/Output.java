@@ -15,7 +15,7 @@ public abstract class Output {
      * @param <T>
      * @param text
      */
-    public static <T> void print(T text) {
+    public static <T> void print(final T text) {
         Output.OUT.print(text);
         Output.OUT.flush();
     }
@@ -25,7 +25,7 @@ public abstract class Output {
      * @param <T>
      * @param text
      */
-    public static <T> void println(T text) {
+    public static <T> void println(final T text) {
         Output.OUT.println(text);
     }
     
@@ -34,7 +34,7 @@ public abstract class Output {
      * @param <T>
      * @param text
      */
-    public static <T> void printError(T text) {
+    public static <T> void printError(final T text) {
         Output.println("\u001B[31m" + text + "\u001B[31m");
     }
 }

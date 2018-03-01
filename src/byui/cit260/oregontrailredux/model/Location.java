@@ -3,7 +3,7 @@ package byui.cit260.oregontrailredux.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Location implements Serializable {
+public final class Location implements Serializable {
     private String name;
     private String description;
     private int    distance;
@@ -14,7 +14,8 @@ public class Location implements Serializable {
         this.distance    = 0;
     }
     
-    public Location(String name, String description, int distance) {
+    public Location(final String name, final String description,
+            final int distance) {
         this.name        = name;
         this.description = description;
         this.distance    = distance;
@@ -24,7 +25,7 @@ public class Location implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -32,7 +33,7 @@ public class Location implements Serializable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -40,7 +41,7 @@ public class Location implements Serializable {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(final int distance) {
         this.distance = distance;
     }
 
@@ -54,7 +55,7 @@ public class Location implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

@@ -33,13 +33,15 @@ public abstract class ViewControl {
      * underlying ArrayList.
      * @param target
      */
-    public static void goToView(String target) {
+    public static void goToView(final String target) {
         try {
-            Class c = Class.forName("byui.cit260.oregontrailredux.view." + target);
+            Class c = Class.forName("byui.cit260.oregontrailredux.view." +
+                    target);
             ViewInterface view = (ViewInterface) c.newInstance();
             
             ViewControl.VIEWS.add(view);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException |
+                InstantiationException e) {
             Output.printError(e.toString());
         }
     }

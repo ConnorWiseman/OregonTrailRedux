@@ -17,7 +17,7 @@ public abstract class Formatter {
      * @param symbol
      * @return
      */
-    private static String padString(int length, char symbol) {
+    private static String padString(final int length, final char symbol) {
         String constructed = new String(new char[length]);
         return constructed.replace('\0', symbol);
     }
@@ -29,7 +29,7 @@ public abstract class Formatter {
      * @param maxWidth
      * @param hSymbol
      */
-    private static void printSeparator(int maxWidth, char hSymbol) {
+    private static void printSeparator(final int maxWidth, final char hSymbol) {
         Output.println(Formatter.padString(maxWidth + 3, hSymbol));
     }
     
@@ -39,7 +39,8 @@ public abstract class Formatter {
      * @param maxWidth
      * @param vSymbol
      */
-    private static void printSeparatorSpacing(int maxWidth, char vSymbol) {
+    private static void printSeparatorSpacing(final int maxWidth,
+            final char vSymbol) {
         Output.println(vSymbol + Formatter.padString(maxWidth + 1, ' ') + vSymbol);
     }
     
@@ -49,13 +50,15 @@ public abstract class Formatter {
      * @param maxWidth
      * @param vSymbol
      */
-    private static void printLine(String line, int maxWidth, char vSymbol) {
+    private static void printLine(final String line, final int maxWidth, 
+            final char vSymbol) {
         String paddedLine = vSymbol + " " + line;
         String emptySpace = Formatter.padString(maxWidth - line.length(), ' ');
         Output.println(paddedLine + emptySpace + vSymbol);
     }
     
-    public static void displayMenu(int maxWidth, char hSymbol, char vSymbol, String title, String ...lines) {
+    public static void displayMenu(final int maxWidth, final char hSymbol,
+            final char vSymbol, final String title, final String ...lines) {
         Formatter.printSeparator(maxWidth, hSymbol);
         Formatter.printLine(title, maxWidth, vSymbol);
         Formatter.printSeparator(maxWidth, hSymbol);
@@ -67,7 +70,7 @@ public abstract class Formatter {
         Formatter.printSeparator(maxWidth, hSymbol);
     }
     
-    public static void displayText(String ...multiple) {
+    public static void displayText(final String ...multiple) {
         // Display the top separator and spacing.
         Formatter.printSeparator(Formatter.MAX_WIDTH, Formatter.H_SYMBOL);
         Formatter.printSeparatorSpacing(Formatter.MAX_WIDTH, Formatter.V_SYMBOL);

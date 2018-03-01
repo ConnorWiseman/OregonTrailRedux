@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Map implements Serializable {
+public final class Map implements Serializable {
     private ArrayList<Location> contents;
     private int                 currentLocation;
     
@@ -13,7 +13,7 @@ public class Map implements Serializable {
         this.currentLocation = 0;
     }
     
-    public Map(ArrayList<Location> contents, int currentLocation) {
+    public Map(final ArrayList<Location> contents, final int currentLocation) {
         this.contents        = contents;
         this.currentLocation = currentLocation;
     }
@@ -22,7 +22,7 @@ public class Map implements Serializable {
         return contents;
     }
 
-    public void setContents(ArrayList<Location> contents) {
+    public void setContents(final ArrayList<Location> contents) {
         this.contents = contents;
     }
 
@@ -30,7 +30,7 @@ public class Map implements Serializable {
         return currentLocation;
     }
 
-    public void setCurrentLocation(int currentLocation) {
+    public void setCurrentLocation(final int currentLocation) {
         this.currentLocation = currentLocation;
     }
 
@@ -48,7 +48,7 @@ public class Map implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

@@ -19,7 +19,7 @@ public abstract class Input {
      * @return
      * @throws IOException
      */
-    public static char getChar(String prompt) throws IOException {
+    public static char getChar(final String prompt) throws IOException {
         return Input.getString(prompt).charAt(0);
     }
     
@@ -29,11 +29,11 @@ public abstract class Input {
      * @return
      * @throws IOException
      */
-    public static int getInt(String prompt) throws IOException {
+    public static int getInt(final String prompt) throws IOException {
         int     result = 0;
         boolean valid  = false;
         
-        // Continue prompting for input as long as it is not a valid integer string.
+        // Continue prompting for input as long as it is not a valid integer.
         while (!valid) {
             String input = Input.getString(prompt);
             
@@ -54,7 +54,7 @@ public abstract class Input {
      * @return
      * @throws IOException
      */
-    public static String getString(String prompt) throws IOException {
+    public static String getString(final String prompt) throws IOException {
         String input = null;
 
         // Continue prompting for input as long as the input is null or empty.

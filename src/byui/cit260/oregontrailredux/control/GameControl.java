@@ -1,9 +1,11 @@
 package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Game;
+import byui.cit260.oregontrailredux.model.Inventory;
 import byui.cit260.oregontrailredux.model.Map;
 import byui.cit260.oregontrailredux.model.Player;
-
+import byui.cit260.oregontrailredux.model.Team;
+import byui.cit260.oregontrailredux.model.Wagon;
 import byui.cit260.oregontrailredux.view.ViewInterface;
 
 import java.io.File;
@@ -23,11 +25,13 @@ public abstract class GameControl {
     private final static String SAVE_PATH = GameControl.SAVE_DIR +
         File.separator + "save.data";
 
+    private static Game currentGame;
+
     private static void makeSaveDirectory() {
         try {
             new File(GameControl.SAVE_DIR).mkdir();
         } catch (SecurityException e) {
-            
+            // Log the exception?
         }
     }
 
@@ -37,50 +41,71 @@ public abstract class GameControl {
      * @param playerName
      * @return 
      */
-    public static Game createNewGame(String playerName) {
-        Player player = PlayerControl.createNewPlayer(playerName);
-        Map    map    = MapControl.createNewMap();
+    public static Game create(final String playerName) {
+        Game   game         = new Game();
+        Player player       = PlayerControl.create(playerName);
+        Map    map          = MapControl.create();
+        Team   team         = TeamControl.create();
+        Wagon  wagon        = WagonControl.create();
+        Inventory inventory = InventoryControl.create();
         
-        return new Game(player, map);
+        game.setPlayer(player);
+        game.setMap(map);
+        game.setTeam(team);
+        team.setWagon(wagon);
+        wagon.setCargo(inventory);
+        
+        GameControl.currentGame = game;
+        return GameControl.currentGame;
     }
     
+    /**
+     * Returns the current currentGame.
+     * @return
+     */
+    public static Game getCurrentGame() {
+        return GameControl.currentGame;
+    }
+    
+    /**
+     * Loads an existing currentGame from a save file.
+     */
     public static void loadExistingGame() {
         try (FileInputStream file = new FileInputStream(GameControl.SAVE_PATH)) {
             ObjectInputStream input = new ObjectInputStream(file);
-            Game game = (Game) input.readObject();
-            GameControl.startGame(game);
+            GameControl.currentGame = (Game) input.readObject();
+            GameControl.startGame();
         } catch (Exception e) {
             
         }
     }
     
-    public static void saveExistingGame(Game game) {
+    /**
+     * Saves the current currentGame to a save file.
+     */
+    public static void saveExistingGame() {
         GameControl.makeSaveDirectory();
 
         try (FileOutputStream fop = new FileOutputStream(GameControl.SAVE_PATH)) {
             ObjectOutputStream output = new ObjectOutputStream(fop);
-            output.writeObject(game);
+            output.writeObject(GameControl.currentGame);
         } catch (IOException e) {
             
         }
     }
-    
+
     /**
-     * The main game loop: creates a ViewStack, pushes a GameMenu onto it, and
-     * loops as long as the ViewStack contains views. Passes the local Game
-     * instance into each view's doAction method so the view can appropriately
-     * delegate to other Controller methods as needed.
-     * @param game
+     * The main currentGame loop.
      */
-    public static void startGame(Game game) {
-        ViewControl.goToView("GameMenu");
+    public static void startGame() {
+        ViewControl.goToView("MenuStart");
         
         while (ViewControl.hasViews()) {
             ViewInterface currentView = ViewControl.getCurrentView();
             
             currentView.display();
             char choice = currentView.getInput();
-            currentView.doAction(choice, game);
+            currentView.doAction(choice);
         }
     }
 }

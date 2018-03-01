@@ -1,46 +1,76 @@
 package byui.cit260.oregontrailredux.view;
 
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
-import java.util.Map.Entry;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * The base class from which all Menus are derived.
  * @author Connor
  */
 public abstract class Menu implements ViewInterface {
-    // Class constants. Used for formatting the appearance of all menus.
-    private static final int    MAX_WIDTH = 32;
-    private static final char   H_SYMBOL  = '-';
-    private static final char   V_SYMBOL  = '|';
-    private static final String DIVIDER   = " - ";
-    
-    // The message dislayed when users select an invalid menu option.
-    protected static String INVALID_CHOICE = "\nInvalid selection.";
 
-    // Class members.
-    protected final ArrayList<Entry<Character, String>> entries;
-    protected       String                              title;
+    /**
+     * An ordered map of Menu options, mapping a Character to an Option.
+     */
+    protected final HashMap<Character, Option> options;
+
+    /**
+     * The title of the Menu.
+     */
+    protected String title;
     
     /**
-     * Instantiates the ArrayList of menu entries.
+     * Instantiates the LinkedHashMap of Character-to-Option entries. It's
+     * important to use LinkedHashMap because insertion order is guaranteed;
+     * therefore, Menu options will be displayed in the order in which they
+     * were added.
      */
     public Menu() {
-        this.entries = new ArrayList<>();
+        this.options = new LinkedHashMap<>();
     }
     
     /**
-     * Adds a menu entry to this Menu.
+     * Adds the specified option to the Menu.
      * @param symbol
      * @param label
+     * @param lambda
      */
-    protected final void addEntry(char symbol, String label) {
-        this.entries.add(new SimpleEntry<>(symbol, label));
+    protected final void addOption(final char symbol, final String label,
+            final Runnable lambda) {
+        this.options.put(symbol, new Option(label, lambda));
+    }
+    
+    /**
+     * Displays this Menu using the Formatter class.
+     */
+    @Override
+    public void display() {
+        String[] menuOptions = this.options.entrySet()
+                .stream()
+                .map(e -> e.getKey() + " - " + e.getValue().label)
+                .toArray(String[]::new);
+
+        Formatter.displayMenu(32, '-', '|', this.title, menuOptions);
+    }
+    
+    /**
+     * Performs the action specified by the user.
+     * @param choice 
+     */
+    @Override
+    public void doAction(final char choice) {
+        Option option = this.options.get(choice);
+        
+        if (option != null) {
+            option.run();
+        } else {
+            Output.println("\nInvalid selection.");
+        }
     }
 
     /**
-     * Prompts the user for an option from this Menu's menu entries.
+     * Prompts the user for an option from this Menu's menu options.
      * @return 
      */
     @Override
@@ -50,22 +80,9 @@ public abstract class Menu implements ViewInterface {
         try {
             input = Character.toUpperCase(Input.getChar("Select an option: "));
         } catch (IOException e) {
-            Output.printError(e.toString());
+            // Log the exception?
         }
         
         return input;
-    }
-
-    /**
-     * Displays this Menu using the Formatter class.
-     */
-    @Override
-    public void display() {
-        String[] menuEntries = this.entries.stream()
-                .map(e -> e.getKey() + Menu.DIVIDER + e.getValue())
-                .toArray(String[]::new);
-
-        Formatter.displayMenu(Menu.MAX_WIDTH, Menu.H_SYMBOL, Menu.V_SYMBOL,
-                title, menuEntries);
     }
 }

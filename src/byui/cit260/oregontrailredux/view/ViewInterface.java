@@ -1,7 +1,5 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.model.Game;
-
 /**
  * The basic interface implemented by every view.
  * @author Connor
@@ -10,15 +8,16 @@ public interface ViewInterface {
 
     /**
      * Acquires input for the current view.
+     * @return 
      */
     public char getInput();
 
     /**
      * Performs the chosen action with the current view. Returns true if the
-     * view is completed and false if the view is still in progress. Requires
-     * an instance of the Game class; see GameControl.startGame
+     * view is completed and false if the view is still in progress.
+     * @param choice
      */
-    public void doAction(char choice, Game game);
+    public void doAction(final char choice);
 
     /**
      * Displays the current view.
