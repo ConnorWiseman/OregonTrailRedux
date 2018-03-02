@@ -2,20 +2,21 @@ package byui.cit260.oregontrailredux.model;
 
 import java.io.Serializable;
 
-import byui.cit260.oregontrailredux.enums.Pace;
+import byui.cit260.oregontrailredux.model.enums.Pace;
 import java.util.Objects;
 
 public final class Team implements Serializable {
-    private Pace  pace;
-    private Oxen  oxen;
+
+    private Pace pace;
+    private Oxen oxen;
     private Wagon wagon;
-    private int   money;
-    
+    private int money;
+
     public Team() {
-        this.pace  = Pace.STOPPED;
+        this.pace = Pace.STOPPED;
         this.money = 0;
     }
-    
+
     public Pace getPace() {
         return pace;
     }

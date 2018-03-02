@@ -1,4 +1,4 @@
-package byui.cit260.oregontrailredux.enums;
+package byui.cit260.oregontrailredux.model.enums;
 
 /**
  * @author Connor
@@ -10,10 +10,10 @@ public enum Item {
     public final int index;
     public final int value;
     public final int weight;
-    
+
     Item(final int index, final int value, final int weight) {
-        this.index  = index;
-        this.value  = value;
+        this.index = index;
+        this.value = value;
         this.weight = weight;
     }
 }

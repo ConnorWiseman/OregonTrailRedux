@@ -4,10 +4,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public final class Wagon implements Serializable {
+
     private Inventory cargo;
-    private int       ownWeight;
-    private int       maxWeight;
-    
+    private int ownWeight;
+    private int maxWeight;
+
     public Wagon() {
         this.ownWeight = 0;
         this.maxWeight = 0;

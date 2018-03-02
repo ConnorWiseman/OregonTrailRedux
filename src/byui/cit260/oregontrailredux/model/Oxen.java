@@ -1,29 +1,30 @@
 package byui.cit260.oregontrailredux.model;
 
-import byui.cit260.oregontrailredux.enums.OxPosition;
+import byui.cit260.oregontrailredux.model.enums.OxPosition;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
 public class Oxen implements Serializable {
+
     private final Ox[] oxen;
-    
+
     public Oxen() {
-        this.oxen = new Ox[]{ new Ox(), new Ox() };
+        this.oxen = new Ox[]{new Ox(), new Ox()};
     }
-    
+
     public Oxen(final Ox left, final Ox right) {
-        this.oxen = new Ox[]{ left, right };
+        this.oxen = new Ox[]{left, right};
     }
-    
+
     public Ox get(final OxPosition type) {
         return this.oxen[type.position];
     }
-    
+
     public Ox[] getOxen() {
         return this.oxen;
     }
-    
+
     public void set(final OxPosition type, final Ox ox) {
         this.oxen[type.position] = ox;
     }
@@ -57,6 +58,5 @@ public class Oxen implements Serializable {
     public String toString() {
         return "Oxen{" + "oxen=" + oxen + '}';
     }
-    
-    
+
 }

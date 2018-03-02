@@ -4,30 +4,31 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public final class Ox implements Serializable {
-    private String  name;
-    private int     strength;
-    private int     exhaustion;
+
+    private String name;
+    private int strength;
+    private int exhaustion;
     private boolean alive;
-    
+
     public Ox() {
-        this.name       = "Unnamed";
-        this.strength   = 0;
+        this.name = "Unnamed";
+        this.strength = 0;
         this.exhaustion = 0;
-        this.alive      = false;
+        this.alive = false;
     }
-    
+
     public Ox(final int strength) {
-        this.name       = "Unnamed";
-        this.strength   = strength;
+        this.name = "Unnamed";
+        this.strength = strength;
         this.exhaustion = 0;
-        this.alive      = true;
+        this.alive = true;
     }
-    
+
     public Ox(final String name, final int strength) {
-        this.name       = name;
-        this.strength   = strength;
+        this.name = name;
+        this.strength = strength;
         this.exhaustion = 0;
-        this.alive      = true;
+        this.alive = true;
     }
 
     public String getName() {

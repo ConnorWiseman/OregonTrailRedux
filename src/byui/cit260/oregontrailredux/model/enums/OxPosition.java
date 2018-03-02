@@ -1,4 +1,4 @@
-package byui.cit260.oregontrailredux.enums;
+package byui.cit260.oregontrailredux.model.enums;
 
 /**
  * @author Connor
@@ -8,7 +8,7 @@ public enum OxPosition {
     RIGHT(1);
 
     public final int position;
-    
+
     OxPosition(final int position) {
         this.position = position;
     }

@@ -1,25 +1,32 @@
 package byui.cit260.oregontrailredux.view;
 
+import byui.cit260.oregontrailredux.view.format.MenuPrinter;
+import byui.cit260.oregontrailredux.view.io.Input;
+import byui.cit260.oregontrailredux.view.io.Output;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * The base class from which all Menus are derived.
+ * The base Menu class from which all other menus are derived.
+ *
  * @author Connor
+ * @private
  */
-public abstract class Menu implements ViewInterface {
+abstract class Menu implements ViewInterface {
 
     /**
      * An ordered map of Menu options, mapping a Character to an Option.
      */
-    protected final HashMap<Character, Option> options;
+    private final HashMap<Character, Option> options;
 
     /**
      * The title of the Menu.
      */
     protected String title;
     
+    protected String prompt;
+
     /**
      * Instantiates the LinkedHashMap of Character-to-Option entries. It's
      * important to use LinkedHashMap because insertion order is guaranteed;
@@ -28,10 +35,12 @@ public abstract class Menu implements ViewInterface {
      */
     public Menu() {
         this.options = new LinkedHashMap<>();
+        this.prompt = "Select an option:";
     }
-    
+
     /**
      * Adds the specified option to the Menu.
+     *
      * @param symbol
      * @param label
      * @param lambda
@@ -40,9 +49,9 @@ public abstract class Menu implements ViewInterface {
             final Runnable lambda) {
         this.options.put(symbol, new Option(label, lambda));
     }
-    
+
     /**
-     * Displays this Menu using the Formatter class.
+     * Displays this Menu using the MenuPrinter class.
      */
     @Override
     public void display() {
@@ -51,17 +60,18 @@ public abstract class Menu implements ViewInterface {
                 .map(e -> e.getKey() + " - " + e.getValue().label)
                 .toArray(String[]::new);
 
-        Formatter.displayMenu(32, '-', '|', this.title, menuOptions);
+        MenuPrinter.print(this.title, menuOptions);
     }
-    
+
     /**
      * Performs the action specified by the user.
-     * @param choice 
+     *
+     * @param choice
      */
     @Override
     public void doAction(final char choice) {
         Option option = this.options.get(choice);
-        
+
         if (option != null) {
             option.run();
         } else {
@@ -70,19 +80,20 @@ public abstract class Menu implements ViewInterface {
     }
 
     /**
-     * Prompts the user for an option from this Menu's menu options.
-     * @return 
+     * Prompts the user for an Option from this Menu's menu options.
+     *
+     * @return
      */
     @Override
     public char getInput() {
         char input = 0;
-        
+
         try {
-            input = Character.toUpperCase(Input.getChar("Select an option: "));
+            input = Character.toUpperCase(Input.getChar(this.prompt));
         } catch (IOException e) {
             // Log the exception?
         }
-        
+
         return input;
     }
 }

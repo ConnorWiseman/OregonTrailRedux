@@ -4,21 +4,22 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public final class Location implements Serializable {
+
     private String name;
     private String description;
-    private int    distance;
-    
+    private int distance;
+
     public Location() {
-        this.name        = "Unnamed Location";
+        this.name = "Unnamed Location";
         this.description = "No description";
-        this.distance    = 0;
+        this.distance = 0;
     }
-    
+
     public Location(final String name, final String description,
             final int distance) {
-        this.name        = name;
+        this.name = name;
         this.description = description;
-        this.distance    = distance;
+        this.distance = distance;
     }
 
     public String getName() {
@@ -82,6 +83,5 @@ public final class Location implements Serializable {
     public String toString() {
         return "Location{" + "name=" + name + ", description=" + description + ", distance=" + distance + '}';
     }
-    
-    
+
 }

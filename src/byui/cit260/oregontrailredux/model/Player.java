@@ -4,20 +4,21 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public final class Player implements Serializable {
+
     private String name;
-    
+
     public Player() {
         this.name = "Unnamed Player";
     }
-    
+
     public String getName() {
         return this.name;
     }
-    
+
     public void setName(final String name) {
         this.name = name;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;

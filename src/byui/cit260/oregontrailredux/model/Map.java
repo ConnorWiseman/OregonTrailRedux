@@ -4,32 +4,53 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * An ArrayList of Locations.
+ *
+ * @author Connor
+ */
 public final class Map implements Serializable {
+
     private ArrayList<Location> contents;
-    private int                 currentLocation;
-    
+    private int currentLocation;
+
+    /**
+     * The default constructor. Initializes the Map contents and the
+     * currentLocation of the user.
+     */
     public Map() {
-        this.contents        = new ArrayList<>();
+        this.contents = new ArrayList<>();
         this.currentLocation = 0;
     }
-    
-    public Map(final ArrayList<Location> contents, final int currentLocation) {
-        this.contents        = contents;
-        this.currentLocation = currentLocation;
-    }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Location> getContents() {
         return contents;
     }
 
-    public void setContents(final ArrayList<Location> contents) {
+    /**
+     *
+     * @param contents
+     */
+    public void setContents(ArrayList<Location> contents) {
         this.contents = contents;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getCurrentLocation() {
         return currentLocation;
     }
 
+    /**
+     *
+     * @param currentLocation
+     */
     public void setCurrentLocation(final int currentLocation) {
         this.currentLocation = currentLocation;
     }
