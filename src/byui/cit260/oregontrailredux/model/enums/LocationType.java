@@ -1,33 +1,28 @@
 package byui.cit260.oregontrailredux.model.enums;
 
 /**
- * Definitions for every Location in the game. Each Location definition includes
- * a name, a description, and the number of miles from the starting point. Note
- * that Salt Lake Valley must be ~1,300 miles away from Nauvoo for historical
- * and geographical accuracy.
+ * Definitions for every Location in the game.
  *
  * @author Connor
  */
 public enum LocationType {
-    NAUVOO(
-            "Nauvoo",
-            "The home of the Saints in Illinois.",
-            0
-    ),
-    SALT_LAKE_VALLEY(
-            "Salt Lake Valley",
-            "The home of the Saints in the wilderness",
-            1300
-    );
+
+    NOWHERE("Nowhere", 0, 0, "", Tile.EMPTY),
+    NAUVOO("Nauvoo", 19, 0, "The home of the Saints in Illinois.", Tile.CITY),
+    SALT_LAKE_VALLEY("Salt Lake Valley", 0, 7, "The home of the Saints in the wilderness", Tile.CITY);
 
     public final String name;
+    public final int x;
+    public final int y;
     public final String description;
-    public final int distance;
+    public final Tile tile;
 
-    LocationType(final String name, final String description,
-            final int distance) {
+    LocationType(final String name, final int x, final int y,
+            final String description, final Tile tile) {
         this.name = name;
+        this.x = x;
+        this.y = y;
         this.description = description;
-        this.distance = distance;
+        this.tile = tile;
     }
 }

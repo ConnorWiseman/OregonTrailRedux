@@ -1,27 +1,82 @@
 package byui.cit260.oregontrailredux.control;
 
+import byui.cit260.oregontrailredux.view.ConfirmMenu;
 import java.util.ArrayList;
 
-import byui.cit260.oregontrailredux.view.io.Output;
 import byui.cit260.oregontrailredux.view.ViewInterface;
+import byui.cit260.oregontrailredux.view.util.Runnable;
 
 /**
  * Controls which view the game is currently displaying.
  *
  * @author Connor
  */
-public abstract class ViewControl {
+public final class ViewControl {
 
     private static final ArrayList<ViewInterface> VIEWS = new ArrayList<>();
+
+    private ViewControl() {
+    }
 
     /**
      * Quits the current view, then transitions to the target view.
      *
      * @param target
      */
-    public static void changeToView(final String target) {
+    public static void changeTo(final String target) {
         ViewControl.quitCurrentView();
-        ViewControl.goToView(target);
+        ViewControl.display(target);
+    }
+
+    /**
+     * Quits the current view, then transitions to the specified ViewInterface.
+     *
+     * @param view
+     */
+    public static void changeTo(final ViewInterface view) {
+        ViewControl.quitCurrentView();
+        ViewControl.display(view);
+    }
+
+    /**
+     * Quits the current ViewInterface, then displays a ConfirmMenu to confirm
+     * some sensitive action.
+     *
+     * @param prompt
+     * @param y
+     * @param n
+     */
+    public static void confirm(final String prompt, final Runnable y,
+            final Runnable n) {
+        ViewControl.changeTo(new ConfirmMenu(prompt, y, n));
+    }
+
+    /**
+     * Uses reflection to create and append another ViewInterface to the
+     * underlying ArrayList.
+     *
+     * @param target
+     */
+    public static void display(final String target) {
+        try {
+            Class c = Class.forName("byui.cit260.oregontrailredux.view."
+                    + target);
+            ViewInterface view = (ViewInterface) c.newInstance();
+
+            ViewControl.display(view);
+        } catch (ClassNotFoundException | IllegalAccessException
+                | InstantiationException e) {
+            // Log the exception?
+        }
+    }
+
+    /**
+     * Displays the specified ViewInterface.
+     *
+     * @param view
+     */
+    public static void display(final ViewInterface view) {
+        ViewControl.VIEWS.add(view);
     }
 
     /**
@@ -40,25 +95,6 @@ public abstract class ViewControl {
      */
     public static ViewInterface getCurrentView() {
         return ViewControl.VIEWS.get(ViewControl.VIEWS.size() - 1);
-    }
-
-    /**
-     * Uses reflection to create and append another ViewInterface to the
-     * underlying ArrayList.
-     *
-     * @param target
-     */
-    public static void goToView(final String target) {
-        try {
-            Class c = Class.forName("byui.cit260.oregontrailredux.view."
-                    + target);
-            ViewInterface view = (ViewInterface) c.newInstance();
-
-            ViewControl.VIEWS.add(view);
-        } catch (ClassNotFoundException | IllegalAccessException
-                | InstantiationException e) {
-            Output.printError(e.toString());
-        }
     }
 
     /**

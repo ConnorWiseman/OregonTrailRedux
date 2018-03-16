@@ -1,57 +1,29 @@
 package byui.cit260.oregontrailredux.model;
 
+import byui.cit260.oregontrailredux.model.enums.LocationType;
 import java.io.Serializable;
 import java.util.Objects;
 
 public final class Location implements Serializable {
 
-    private String name;
-    private String description;
-    private int distance;
+    private LocationType type;
 
     public Location() {
-        this.name = "Unnamed Location";
-        this.description = "No description";
-        this.distance = 0;
+        this.type = LocationType.NOWHERE;
     }
 
-    public Location(final String name, final String description,
-            final int distance) {
-        this.name = name;
-        this.description = description;
-        this.distance = distance;
+    public LocationType getType() {
+        return type;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(final int distance) {
-        this.distance = distance;
+    public void setType(LocationType type) {
+        this.type = type;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.description);
-        hash = 71 * hash + this.distance;
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.type);
         return hash;
     }
 
@@ -67,21 +39,11 @@ public final class Location implements Serializable {
             return false;
         }
         final Location other = (Location) obj;
-        if (this.distance != other.distance) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.description, other.description)) {
-            return false;
-        }
-        return true;
+        return this.type == other.type;
     }
 
     @Override
     public String toString() {
-        return "Location{" + "name=" + name + ", description=" + description + ", distance=" + distance + '}';
+        return "Location{" + "type=" + type + '}';
     }
-
 }

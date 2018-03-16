@@ -92,10 +92,7 @@ public final class Game implements Serializable {
         if (!Objects.equals(this.map, other.map)) {
             return false;
         }
-        if (!Objects.equals(this.team, other.team)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.team, other.team);
     }
 
     @Override

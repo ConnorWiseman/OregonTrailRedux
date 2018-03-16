@@ -2,7 +2,10 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Wagon;
 
-public abstract class WagonControl {
+public final class WagonControl {
+
+    private WagonControl() {
+    }
 
     public static Wagon create() {
         return new Wagon();

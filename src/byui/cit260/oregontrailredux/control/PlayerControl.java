@@ -2,7 +2,10 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Player;
 
-public abstract class PlayerControl {
+public final class PlayerControl {
+
+    private PlayerControl() {
+    }
 
     public static Player create(final String name) {
         Player player = new Player();

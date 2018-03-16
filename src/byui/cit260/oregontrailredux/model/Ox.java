@@ -94,10 +94,7 @@ public final class Ox implements Serializable {
         if (this.alive != other.alive) {
             return false;
         }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.name, other.name);
     }
 
     @Override

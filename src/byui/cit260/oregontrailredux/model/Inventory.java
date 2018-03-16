@@ -78,10 +78,7 @@ public final class Inventory implements Serializable {
             return false;
         }
         final Inventory other = (Inventory) obj;
-        if (!Arrays.equals(this.quantities, other.quantities)) {
-            return false;
-        }
-        return true;
+        return Arrays.equals(this.quantities, other.quantities);
     }
 
     @Override

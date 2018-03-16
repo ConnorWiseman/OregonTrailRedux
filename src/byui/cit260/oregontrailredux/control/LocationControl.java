@@ -1,5 +1,7 @@
 package byui.cit260.oregontrailredux.control;
 
-public abstract class LocationControl {
+public final class LocationControl {
 
+    private LocationControl() {
+    }
 }

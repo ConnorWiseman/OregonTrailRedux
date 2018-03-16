@@ -1,6 +1,7 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.view.format.MenuPrinter;
+import byui.cit260.oregontrailredux.view.util.Runnable;
+import byui.cit260.oregontrailredux.view.print.MenuPrinter;
 import byui.cit260.oregontrailredux.view.io.Input;
 import byui.cit260.oregontrailredux.view.io.Output;
 import java.io.IOException;
@@ -8,38 +9,41 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 /**
- * The base Menu class from which all other menus are derived.
+ * The base AbstractMenu class from which all other menus are derived.
  *
  * @author Connor
  * @private
  */
-abstract class Menu implements ViewInterface {
+abstract class AbstractMenu implements ViewInterface {
 
     /**
-     * An ordered map of Menu options, mapping a Character to an Option.
+     * An ordered map of AbstractMenu options, mapping a Character to an Option.
      */
     private final HashMap<Character, Option> options;
 
     /**
-     * The title of the Menu.
+     * The title of the AbstractMenu.
      */
     protected String title;
-    
+
+    /**
+     * The prompt displayed by the AbstractMenu.
+     */
     protected String prompt;
 
     /**
      * Instantiates the LinkedHashMap of Character-to-Option entries. It's
      * important to use LinkedHashMap because insertion order is guaranteed;
-     * therefore, Menu options will be displayed in the order in which they
-     * were added.
+     * therefore, Menu options will be displayed in the order in which they were
+     * added.
      */
-    public Menu() {
+    public AbstractMenu() {
         this.options = new LinkedHashMap<>();
         this.prompt = "Select an option:";
     }
 
     /**
-     * Adds the specified option to the Menu.
+     * Adds the specified option to the AbstractMenu.
      *
      * @param symbol
      * @param label
@@ -51,7 +55,7 @@ abstract class Menu implements ViewInterface {
     }
 
     /**
-     * Displays this Menu using the MenuPrinter class.
+     * Displays this AbstractMenu using the MenuPrinter class.
      */
     @Override
     public void display() {
@@ -73,14 +77,14 @@ abstract class Menu implements ViewInterface {
         Option option = this.options.get(choice);
 
         if (option != null) {
-            option.run();
+            option.select();
         } else {
-            Output.println("\nInvalid selection.");
+            Output.println("Invalid selection.");
         }
     }
 
     /**
-     * Prompts the user for an Option from this Menu's menu options.
+     * Prompts the user for an Option from this AbstractMenu's menu options.
      *
      * @return
      */

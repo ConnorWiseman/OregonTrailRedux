@@ -11,7 +11,10 @@ import java.lang.reflect.Field;
  *
  * @author Connor
  */
-public abstract class OxenControl {
+public final class OxenControl {
+    
+    private OxenControl() {
+    }
 
     /**
      * Uses reflection to calculate the total value of the specified target

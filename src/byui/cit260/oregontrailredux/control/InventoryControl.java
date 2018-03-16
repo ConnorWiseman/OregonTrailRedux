@@ -9,7 +9,10 @@ import java.lang.reflect.Field;
  *
  * @author Connor
  */
-public abstract class InventoryControl {
+public final class InventoryControl {
+
+    private InventoryControl() {
+    }
 
     /**
      * Adds the specified quantity of the specified type of item to the

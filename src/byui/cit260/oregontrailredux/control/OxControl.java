@@ -1,8 +1,12 @@
 package byui.cit260.oregontrailredux.control;
 
+import byui.cit260.oregontrailredux.control.util.Random;
 import byui.cit260.oregontrailredux.model.Ox;
 
-public abstract class OxControl {
+public final class OxControl {
+    
+    private OxControl() {
+    }
 
     public static Ox create(String name) {
         return new Ox(name, Random.range(30, 80));

@@ -65,10 +65,7 @@ public final class Wagon implements Serializable {
         if (this.maxWeight != other.maxWeight) {
             return false;
         }
-        if (!Objects.equals(this.cargo, other.cargo)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.cargo, other.cargo);
     }
 
     @Override

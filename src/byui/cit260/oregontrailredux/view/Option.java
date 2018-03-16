@@ -1,8 +1,10 @@
 package byui.cit260.oregontrailredux.view;
 
+import byui.cit260.oregontrailredux.view.util.Runnable;
+
 /**
- * A simple data structure representing a Menu option. Written to avoid a
- * pretty hacky Entry<String, Runnable> implementation in the Menu class.
+ * A simple data structure representing a menu option. Written to avoid a pretty
+ * hacky Entry<String, Runnable> implementation in the Menu class.
  *
  * @author Connor
  * @private
@@ -10,14 +12,19 @@ package byui.cit260.oregontrailredux.view;
 final class Option {
 
     /**
-     * Every Menu option contains a label and a lambda function to be executed
-     * when the Option is selected. An Option is immutable once instantiated.
+     * The Option label.
      */
     public final String label;
+
+    /**
+     * The function executed when the Option is selected.
+     */
     private final Runnable lambda;
 
     /**
-     * Instantiates an Option.
+     * Instantiates an Option. Every Option contains a label and a lambda
+     * function to be executed when the Option is selected. An Option is
+     * immutable once instantiated.
      *
      * @param label
      * @param lambda
@@ -30,7 +37,7 @@ final class Option {
     /**
      * Executes the Option's lambda function.
      */
-    public void run() {
-        this.lambda.execute();
+    public void select() {
+        this.lambda.run();
     }
 }

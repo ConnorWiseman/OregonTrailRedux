@@ -4,19 +4,26 @@ import byui.cit260.oregontrailredux.control.GameControl;
 import byui.cit260.oregontrailredux.control.ViewControl;
 import byui.cit260.oregontrailredux.model.enums.Difficulty;
 
-public class DifficultyMenu extends Menu implements ViewInterface {
+/**
+ * A menu used to select the difficulty level of a new game. Not intended to be
+ * reused at any point after a new Game instance has been created; difficulty
+ * cannot be changed mid-game.
+ *
+ * @author Connor
+ */
+public final class DifficultyMenu extends AbstractMenu implements ViewInterface {
 
+    /**
+     * The default constructor.
+     */
     public DifficultyMenu() {
         this.title = "Select difficulty";
 
         for (final Difficulty mode : Difficulty.values()) {
-            this.addOption(mode.symbol, mode.descriptor,
-                    () -> this.setDifficulty(mode));
+            this.addOption(mode.symbol, mode.descriptor, () -> {
+                GameControl.setDifficulty(mode);
+                ViewControl.changeTo("CustomizeLeaderMenu");
+            });
         }
-    }
-
-    private void setDifficulty(final Difficulty mode) {
-        GameControl.setDifficulty(mode);
-        ViewControl.changeToView("GameMenu");
     }
 }

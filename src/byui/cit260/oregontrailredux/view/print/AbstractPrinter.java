@@ -1,4 +1,4 @@
-package byui.cit260.oregontrailredux.view.format;
+package byui.cit260.oregontrailredux.view.print;
 
 import byui.cit260.oregontrailredux.view.io.Output;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Connor
  * @private
  */
-abstract class Format {
+abstract class AbstractPrinter {
 
     /**
      * Creates a String padded to the specified length with a specified symbol.
@@ -39,8 +39,9 @@ abstract class Format {
      */
     protected static void printLine(final String line, final int maxWidth,
             final char vSymbol) {
-        String paddedLine = vSymbol + " " + line;
-        String emptySpace = Format.padString(maxWidth - line.length(), ' ');
+        final String paddedLine = vSymbol + " " + line;
+        final int paddedLength = Math.max(0, maxWidth - line.length());
+        final String emptySpace = AbstractPrinter.padString(paddedLength, ' ');
         Output.println(paddedLine + emptySpace + vSymbol);
     }
 
@@ -52,8 +53,8 @@ abstract class Format {
      * @param vSymbol
      */
     protected static void printParagraph(final String paragraph,
-            final int maxWidth, final char vSymbol) {
-        ArrayList<String> lines = new ArrayList<>();
+            final int maxWidth, final char vSymbol, final boolean spaced) {
+        final ArrayList<String> lines = new ArrayList<>();
 
         if (paragraph.length() < maxWidth) {
             lines.add(paragraph);
@@ -73,8 +74,11 @@ abstract class Format {
         }
 
         lines.forEach((line)
-                -> Format.printLine(line, maxWidth, vSymbol));
-        Format.printSeparatorSpacing(maxWidth, vSymbol);
+                -> AbstractPrinter.printLine(line, maxWidth, vSymbol));
+
+        if (spaced) {
+            AbstractPrinter.printSeparatorSpacing(maxWidth, vSymbol);
+        }
     }
 
     /**
@@ -87,7 +91,7 @@ abstract class Format {
      */
     protected static void printSeparator(final int maxWidth,
             final char hSymbol) {
-        Output.println(Format.padString(maxWidth + 3, hSymbol));
+        Output.println(AbstractPrinter.padString(maxWidth + 3, hSymbol));
     }
 
     /**
@@ -100,6 +104,6 @@ abstract class Format {
     protected static void printSeparatorSpacing(final int maxWidth,
             final char vSymbol) {
         Output.println(vSymbol
-                + Format.padString(maxWidth + 1, ' ') + vSymbol);
+                + AbstractPrinter.padString(maxWidth + 1, ' ') + vSymbol);
     }
 }

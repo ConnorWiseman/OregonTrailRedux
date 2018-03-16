@@ -5,7 +5,7 @@ import byui.cit260.oregontrailredux.model.enums.OxPosition;
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Oxen implements Serializable {
+public final class Oxen implements Serializable {
 
     private final Ox[] oxen;
 
@@ -48,15 +48,12 @@ public class Oxen implements Serializable {
             return false;
         }
         final Oxen other = (Oxen) obj;
-        if (!Arrays.deepEquals(this.oxen, other.oxen)) {
-            return false;
-        }
-        return true;
+        return Arrays.deepEquals(this.oxen, other.oxen);
     }
 
     @Override
     public String toString() {
-        return "Oxen{" + "oxen=" + oxen + '}';
+        return "Oxen{" + "oxen=" + Arrays.toString(oxen) + '}';
     }
 
 }

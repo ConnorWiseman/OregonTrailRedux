@@ -1,7 +1,8 @@
 package byui.cit260.oregontrailredux.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
 
 /**
@@ -11,23 +12,43 @@ import java.util.Objects;
  */
 public final class Map implements Serializable {
 
-    private ArrayList<Location> contents;
-    private int currentLocation;
+    private int numColumns;
+    private int numRows;
+    private HashMap<Point, Location> contents;
+    private Point currentPosition;
 
     /**
      * The default constructor. Initializes the Map contents and the
-     * currentLocation of the user.
+     * currentPosition of the user.
      */
     public Map() {
-        this.contents = new ArrayList<>();
-        this.currentLocation = 0;
+        this.numColumns = 0;
+        this.numRows = 0;
+        this.contents = new LinkedHashMap<>();
+        this.currentPosition = new Point();
+    }
+
+    public int getNumColumns() {
+        return numColumns;
+    }
+
+    public void setNumColumns(int numColumns) {
+        this.numColumns = numColumns;
+    }
+
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public void setNumRows(int numRows) {
+        this.numRows = numRows;
     }
 
     /**
      *
      * @return
      */
-    public ArrayList<Location> getContents() {
+    public HashMap<Point, Location> getContents() {
         return contents;
     }
 
@@ -35,36 +56,25 @@ public final class Map implements Serializable {
      *
      * @param contents
      */
-    public void setContents(ArrayList<Location> contents) {
+    public void setContents(final HashMap<Point, Location> contents) {
         this.contents = contents;
     }
 
-    /**
-     *
-     * @return
-     */
-    public int getCurrentLocation() {
-        return currentLocation;
+    public Point getCurrentPosition() {
+        return currentPosition;
     }
 
-    /**
-     *
-     * @param currentLocation
-     */
-    public void setCurrentLocation(final int currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
-    @Override
-    public String toString() {
-        return "Map{" + "contents=" + contents + ", currentLocation=" + currentLocation + '}';
+    public void setCurrentPosition(final Point currentPosition) {
+        this.currentPosition = currentPosition;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.contents);
-        hash = 83 * hash + this.currentLocation;
+        hash = 71 * hash + this.numColumns;
+        hash = 71 * hash + this.numRows;
+        hash = 71 * hash + Objects.hashCode(this.contents);
+        hash = 71 * hash + Objects.hashCode(this.currentPosition);
         return hash;
     }
 
@@ -80,13 +90,20 @@ public final class Map implements Serializable {
             return false;
         }
         final Map other = (Map) obj;
-        if (this.currentLocation != other.currentLocation) {
+        if (this.numColumns != other.numColumns) {
+            return false;
+        }
+        if (this.numRows != other.numRows) {
             return false;
         }
         if (!Objects.equals(this.contents, other.contents)) {
             return false;
         }
-        return true;
+        return Objects.equals(this.currentPosition, other.currentPosition);
     }
 
+    @Override
+    public String toString() {
+        return "Map{" + "numColumns=" + numColumns + ", numRows=" + numRows + ", contents=" + contents + ", currentPosition=" + currentPosition + '}';
+    }
 }

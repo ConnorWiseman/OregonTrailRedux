@@ -1,16 +1,17 @@
-package byui.cit260.oregontrailredux.view;
+package byui.cit260.oregontrailredux.view.util;
 
 /**
  * A functional interface that describes a lambda function that takes no
  * arguments and returns nothing. Used in the Menu class and its subclasses.
+ * Also implemented by the Option class for kicks and giggles.
  *
  * @author Connor
  * @private
  */
-interface Runnable {
+public interface Runnable {
 
     /**
-     * Executes the lambda function.
+     * Executes a lambda function.
      */
-    public void execute();
+    public void run();
 }
