@@ -18,6 +18,7 @@ public final class Team implements Serializable {
         this.leader = new Person();
         this.companions = new Companions();
         this.pace = Pace.STOPPED;
+        this.oxen = new Oxen();
         this.money = 0;
     }
 

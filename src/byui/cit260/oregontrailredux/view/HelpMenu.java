@@ -1,6 +1,6 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.control.ViewControl;
+import byui.cit260.oregontrailredux.control.ViewController;
 
 /**
  * A menu used to display help information.
@@ -14,6 +14,6 @@ public final class HelpMenu extends AbstractMenu implements ViewInterface {
      */
     public HelpMenu() {
         this.title = "Help";
-        this.addOption('Q', "Quit", () -> ViewControl.quitCurrentView());
+        this.addOption('Q', "Quit help", () -> ViewController.quitCurrentView());
     }
 }

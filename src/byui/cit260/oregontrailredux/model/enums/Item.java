@@ -1,5 +1,6 @@
 package byui.cit260.oregontrailredux.model.enums;
 
+
 /**
  * @author Connor
  */
@@ -29,5 +30,9 @@ public enum Item {
         this.index = index;
         this.value = value;
         this.weight = weight;
+    }
+    
+    public int getValue() {
+        return this.value;
     }
 }

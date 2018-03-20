@@ -1,6 +1,6 @@
 package oregontrailredux;
 
-import byui.cit260.oregontrailredux.control.GameControl;
+import byui.cit260.oregontrailredux.control.GameController;
 
 /**
  * The project's main class.
@@ -15,6 +15,6 @@ public class OregonTrailRedux {
      * @param args
      */
     public static void main(String[] args) {
-        GameControl.startGame();
+        new GameController().startGame();
     }
 }

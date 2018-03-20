@@ -11,24 +11,10 @@ public final class Ox implements Serializable {
     private boolean alive;
 
     public Ox() {
-        this.name = "Unnamed";
+        this.name = "Unnamed Ox";
         this.strength = 0;
         this.exhaustion = 0;
         this.alive = false;
-    }
-
-    public Ox(final int strength) {
-        this.name = "Unnamed";
-        this.strength = strength;
-        this.exhaustion = 0;
-        this.alive = true;
-    }
-
-    public Ox(final String name, final int strength) {
-        this.name = name;
-        this.strength = strength;
-        this.exhaustion = 0;
-        this.alive = true;
     }
 
     public String getName() {

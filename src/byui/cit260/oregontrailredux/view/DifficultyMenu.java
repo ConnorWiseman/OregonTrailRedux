@@ -1,7 +1,7 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.control.GameControl;
-import byui.cit260.oregontrailredux.control.ViewControl;
+import byui.cit260.oregontrailredux.control.GameController;
+import byui.cit260.oregontrailredux.control.ViewController;
 import byui.cit260.oregontrailredux.model.enums.Difficulty;
 
 /**
@@ -21,8 +21,8 @@ public final class DifficultyMenu extends AbstractMenu implements ViewInterface 
 
         for (final Difficulty mode : Difficulty.values()) {
             this.addOption(mode.symbol, mode.descriptor, () -> {
-                GameControl.setDifficulty(mode);
-                ViewControl.changeTo("CustomizeLeaderMenu");
+                new GameController().getResource().setDifficulty(mode);
+                ViewController.changeTo(new CustomizeLeaderMenu());
             });
         }
     }

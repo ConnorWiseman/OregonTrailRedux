@@ -1,8 +1,7 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.control.GameControl;
-import byui.cit260.oregontrailredux.control.TeamControl;
-import byui.cit260.oregontrailredux.control.ViewControl;
+import byui.cit260.oregontrailredux.control.GameController;
+import byui.cit260.oregontrailredux.control.ViewController;
 import byui.cit260.oregontrailredux.model.Team;
 import byui.cit260.oregontrailredux.model.enums.Pace;
 
@@ -21,9 +20,9 @@ public final class PaceMenu extends AbstractMenu implements ViewInterface {
 
         for (final Pace pace : Pace.values()) {
             this.addOption(pace.symbol, pace.descriptor, () -> {
-                Team team = GameControl.getCurrentGame().getTeam();
-                TeamControl.setPace(team, pace);
-                ViewControl.quitCurrentView();
+                final Team team = new GameController().getResource().getTeam();
+                team.setPace(pace);
+                ViewController.quitCurrentView();
             });
         }
     }

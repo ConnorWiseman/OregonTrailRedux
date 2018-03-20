@@ -2,6 +2,7 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Ox;
 import byui.cit260.oregontrailredux.model.Oxen;
+import byui.cit260.oregontrailredux.model.enums.OxPosition;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,61 +15,59 @@ public class OxenControlTest {
     @Test
     public void testCalculatePullCapacity() {
         System.out.println("calculatePullCapacity");
-        Ox left, right;
-        Oxen oxen;
+        final Ox left = new Ox();
+        final Ox right = new Ox();
+        final Oxen oxen = new Oxen();
+        oxen.set(OxPosition.LEFT, left);
+        oxen.set(OxPosition.RIGHT, right);
+        final OxenController oc = new OxenController(oxen);
         int expResult, result;
 
         System.out.println("valid, no exhaustion #1");
-        left = new Ox(5);
-        right = new Ox(7);
-        oxen = new Oxen(left, right);
+        left.setStrength(5);
+        right.setStrength(7);
         expResult = 24;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
 
         System.out.println("valid, no exhaustion #2");
-        left = new Ox(1);
-        right = new Ox(9);
-        oxen = new Oxen(left, right);
+        left.setStrength(1);
+        right.setStrength(9);
         expResult = 20;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
 
         System.out.println("valid, no exhaustion #3");
-        left = new Ox(0);
-        right = new Ox(5);
-        oxen = new Oxen(left, right);
+        left.setStrength(0);
+        right.setStrength(5);
         expResult = 10;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
 
         System.out.println("valid, exhaustion #1");
-        left = new Ox(3);
-        right = new Ox(15);
-        oxen = new Oxen(left, right);
+        left.setStrength(3);
+        right.setStrength(15);
         left.setExhaustion(10);
         expResult = 34;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
 
         System.out.println("valid, exhaustion #2");
-        left = new Ox(4);
-        right = new Ox(2);
-        oxen = new Oxen(left, right);
+        left.setStrength(4);
+        right.setStrength(2);
         left.setExhaustion(10);
         right.setExhaustion(100);
         expResult = 5;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
 
         System.out.println("valid, exhaustion #3");
-        left = new Ox(5);
-        right = new Ox(7);
-        oxen = new Oxen(left, right);
+        left.setStrength(5);
+        right.setStrength(7);
         left.setExhaustion(100);
         right.setExhaustion(100);
         expResult = 0;
-        result = OxenControl.calculatePullCapacity(oxen);
+        result = oc.calculatePullCapacity();
         assertEquals(expResult, result);
     }
 }

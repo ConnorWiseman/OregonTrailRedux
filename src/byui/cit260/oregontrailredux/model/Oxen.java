@@ -13,10 +13,6 @@ public final class Oxen implements Serializable {
         this.oxen = new Ox[]{new Ox(), new Ox()};
     }
 
-    public Oxen(final Ox left, final Ox right) {
-        this.oxen = new Ox[]{left, right};
-    }
-
     public Ox get(final OxPosition type) {
         return this.oxen[type.position];
     }

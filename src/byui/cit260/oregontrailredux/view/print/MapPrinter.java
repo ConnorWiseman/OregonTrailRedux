@@ -4,7 +4,6 @@ import byui.cit260.oregontrailredux.model.Location;
 import byui.cit260.oregontrailredux.model.Map;
 import byui.cit260.oregontrailredux.model.Point;
 import byui.cit260.oregontrailredux.model.enums.LocationType;
-import byui.cit260.oregontrailredux.view.io.Output;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -39,7 +38,9 @@ public final class MapPrinter extends AbstractPrinter {
         final AtomicInteger offset = new AtomicInteger();
 
         IntStream.range(0, numRows).forEach((final int row) -> {
-            rows[row] = String.valueOf(row) + " " + String.join("  ",
+            final String s = String.valueOf(row);
+            rows[row] = s + AbstractPrinter.padString(2 - s.length(), ' ')
+                     + " " + String.join("  ",
                     tiles.subList(offset.get(), offset.addAndGet(numColumns)))
                     + "  ";
         });
@@ -74,20 +75,20 @@ public final class MapPrinter extends AbstractPrinter {
                     return s + AbstractPrinter.padString(3 - s.length(), ' ');
                 })
                 .collect(Collectors.joining(" "));
-        
-        AbstractPrinter.printLine("   " + columns, max, V);
+
+        AbstractPrinter.printLine("    " + columns, max, V);
     }
 
     private static void printRows(final Map map, final int max) {
         final String[] rows = MapPrinter.getPrintableRows(map);
-        
+
         for (final String row : rows) {
             AbstractPrinter.printLine(row, max, V);
         }
     }
 
     public static void print(final Map map) {
-        final int max = (map.getNumColumns() * 4) + 2;
+        final int max = (map.getNumColumns() * 4) + 3;
 
         MapPrinter.printHeader(map, max);
         MapPrinter.printRows(map, max);

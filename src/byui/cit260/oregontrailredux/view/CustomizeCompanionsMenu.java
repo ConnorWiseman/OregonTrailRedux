@@ -1,6 +1,6 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.control.ViewControl;
+import byui.cit260.oregontrailredux.control.ViewController;
 
 public final class CustomizeCompanionsMenu extends AbstractMenu implements ViewInterface {
     /**
@@ -13,9 +13,9 @@ public final class CustomizeCompanionsMenu extends AbstractMenu implements ViewI
         this.addOption('A', "Add companion", () -> {});
         this.addOption('R', "Remove companion", () -> {});
         this.addOption('C', "Continue", () -> {
-            ViewControl.confirm("Finish customizing your team companions?",
-                    () -> ViewControl.changeTo("GameMenu"),
-                    () -> ViewControl.changeTo("CustomizeCompanionsMenu"));
+            ViewController.confirm("Finish customizing your team companions?",
+                    () -> ViewController.changeTo(new GameMenu()),
+                    () -> ViewController.changeTo(new CustomizeCompanionsMenu()));
         });
     }
 }

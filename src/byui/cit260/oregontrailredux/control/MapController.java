@@ -7,12 +7,32 @@ import byui.cit260.oregontrailredux.model.enums.LocationType;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
-public final class MapControl {
+public final class MapController implements ControllerInterface {
 
-    private MapControl() {
+    private final Map map;
+
+    public MapController() {
+        this.map = new Map();
     }
 
-    private static void fill(final Map map) {
+    public MapController(final Map map) {
+        this.map = map;
+    }
+
+    @Override
+    public Map create() {
+        final Map newMap = new Map();
+
+        newMap.setCurrentPosition(new Point(19, 0));
+        newMap.setNumColumns(20);
+        newMap.setNumRows(11);
+        this.fill(newMap);
+        this.populate(newMap);
+
+        return newMap;
+    }
+
+    private void fill(final Map map) {
         HashMap<Point, Location> locations = map.getContents();
 
         IntStream.range(0, map.getNumRows()).forEach((final int y) -> {
@@ -22,28 +42,21 @@ public final class MapControl {
         });
     }
 
-    private static void populate(final Map map) {
+    @Override
+    public Map getResource() {
+        return this.map;
+    }
+
+    public boolean isValidPoint(final Point point) {
+        return (this.map.getContents().get(point) != null);
+    }
+
+    private void populate(final Map map) {
         HashMap<Point, Location> locations = map.getContents();
 
         for (final LocationType type : LocationType.values()) {
             locations.get(new Point(type.x, type.y)).setType(type);
         }
-    }
-
-    public static Map create() {
-        Map map = new Map();
-
-        map.setCurrentPosition(new Point(19, 0));
-        map.setNumColumns(20);
-        map.setNumRows(10);
-        MapControl.fill(map);
-        MapControl.populate(map);
-
-        return map;
-    }
-
-    public static boolean isValidPoint(final Map map, final Point point) {
-        return (map.getContents().get(point) != null);
     }
 
 }

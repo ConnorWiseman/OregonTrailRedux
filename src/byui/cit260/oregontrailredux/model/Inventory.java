@@ -1,6 +1,7 @@
 package byui.cit260.oregontrailredux.model;
 
 import byui.cit260.oregontrailredux.model.enums.Item;
+import byui.cit260.oregontrailredux.view.io.Output;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -57,6 +58,11 @@ public final class Inventory implements Serializable {
      */
     public void setQuantities(final int[] quantities) {
         this.quantities = quantities;
+        Output.println(Arrays.toString(this.quantities));
+    }
+    
+    public int getValue(final Item type) {
+        return type.value;
     }
 
     @Override

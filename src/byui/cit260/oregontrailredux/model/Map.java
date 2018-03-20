@@ -19,7 +19,7 @@ public final class Map implements Serializable {
 
     /**
      * The default constructor. Initializes the Map contents and the
-     * currentPosition of the user.
+     * currentPosition of the player's Team.
      */
     public Map() {
         this.numColumns = 0;
@@ -32,7 +32,7 @@ public final class Map implements Serializable {
         return numColumns;
     }
 
-    public void setNumColumns(int numColumns) {
+    public void setNumColumns(final int numColumns) {
         this.numColumns = numColumns;
     }
 
@@ -40,7 +40,7 @@ public final class Map implements Serializable {
         return numRows;
     }
 
-    public void setNumRows(int numRows) {
+    public void setNumRows(final int numRows) {
         this.numRows = numRows;
     }
 

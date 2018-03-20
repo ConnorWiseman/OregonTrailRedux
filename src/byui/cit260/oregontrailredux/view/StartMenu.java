@@ -1,12 +1,15 @@
 package byui.cit260.oregontrailredux.view;
 
-import byui.cit260.oregontrailredux.view.print.TextBoxPrinter;
+import byui.cit260.oregontrailredux.control.GameController;
+import byui.cit260.oregontrailredux.control.MapController;
+import byui.cit260.oregontrailredux.control.PlayerController;
+import byui.cit260.oregontrailredux.control.TeamController;
+import byui.cit260.oregontrailredux.control.ViewController;
+import byui.cit260.oregontrailredux.model.Game;
+import byui.cit260.oregontrailredux.model.Player;
 import byui.cit260.oregontrailredux.view.io.Input;
 import byui.cit260.oregontrailredux.view.io.Output;
-import byui.cit260.oregontrailredux.control.GameControl;
-import byui.cit260.oregontrailredux.control.MapControl;
-import byui.cit260.oregontrailredux.control.ViewControl;
-import byui.cit260.oregontrailredux.view.print.MapPrinter;
+import byui.cit260.oregontrailredux.view.print.TextBoxPrinter;
 import java.io.IOException;
 
 /**
@@ -24,8 +27,8 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
         this.addOption('N', "New game", () -> this.startNewGame());
         this.addOption('L', "Load game", () -> this.loadGame());
         this.addOption('A', "About", () -> this.displayAbout());
-        this.addOption('H', "Help", () -> ViewControl.display("HelpMenu"));
-        this.addOption('E', "Exit", () -> ViewControl.quitCurrentView());
+        this.addOption('H', "Help", () -> ViewController.display(new HelpMenu()));
+        this.addOption('E', "Exit", () -> ViewController.quitCurrentView());
     }
 
     /**
@@ -39,11 +42,13 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
      * Loads a previously saved game.
      */
     private void loadGame() {
-        GameControl.loadGame();
-        Output.println("Welcome back, "
-                + GameControl.getCurrentGame().getPlayer().getName()
-                + "!");
-        ViewControl.display("GameMenu");
+        final GameController gc = new GameController();
+        gc.loadGame();
+        
+        final String name = gc.getResource().getPlayer().getName();
+        Output.println("Welcome back, " + name + "!");
+        
+        ViewController.display(new GameMenu());
     }
 
     /**
@@ -51,9 +56,18 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
      */
     private void startNewGame() {
         try {
-            String name = Input.getString("Enter your name:");
-            GameControl.create(name);
-            ViewControl.display("DifficultyMenu");
+            final String name = Input.getString("Enter your name:");
+            
+            final Game currentGame = new GameController().getResource();
+            
+            final Player player = new PlayerController().getResource();
+            player.setName(name);
+            
+            currentGame.setPlayer(player);
+            currentGame.setMap(new MapController().create());
+            currentGame.setTeam(new TeamController().create());
+            
+            ViewController.display(new DifficultyMenu());
         } catch (IOException e) {
             // Log the exception?
         }

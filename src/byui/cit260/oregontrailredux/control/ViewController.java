@@ -1,41 +1,30 @@
 package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.view.ConfirmMenu;
-import java.util.ArrayList;
-
 import byui.cit260.oregontrailredux.view.ViewInterface;
 import byui.cit260.oregontrailredux.view.util.Runnable;
+import java.util.ArrayList;
 
 /**
  * Controls which view the game is currently displaying.
  *
  * @author Connor
  */
-public final class ViewControl {
+public final class ViewController {
 
     private static final ArrayList<ViewInterface> VIEWS = new ArrayList<>();
 
-    private ViewControl() {
+    private ViewController() {
     }
-
-    /**
-     * Quits the current view, then transitions to the target view.
-     *
-     * @param target
-     */
-    public static void changeTo(final String target) {
-        ViewControl.quitCurrentView();
-        ViewControl.display(target);
-    }
-
+    
     /**
      * Quits the current view, then transitions to the specified ViewInterface.
      *
      * @param view
      */
     public static void changeTo(final ViewInterface view) {
-        ViewControl.quitCurrentView();
-        ViewControl.display(view);
+        ViewController.quitCurrentView();
+        ViewController.display(view);
     }
 
     /**
@@ -48,26 +37,7 @@ public final class ViewControl {
      */
     public static void confirm(final String prompt, final Runnable y,
             final Runnable n) {
-        ViewControl.changeTo(new ConfirmMenu(prompt, y, n));
-    }
-
-    /**
-     * Uses reflection to create and append another ViewInterface to the
-     * underlying ArrayList.
-     *
-     * @param target
-     */
-    public static void display(final String target) {
-        try {
-            Class c = Class.forName("byui.cit260.oregontrailredux.view."
-                    + target);
-            ViewInterface view = (ViewInterface) c.newInstance();
-
-            ViewControl.display(view);
-        } catch (ClassNotFoundException | IllegalAccessException
-                | InstantiationException e) {
-            // Log the exception?
-        }
+        ViewController.changeTo(new ConfirmMenu(prompt, y, n));
     }
 
     /**
@@ -76,7 +46,7 @@ public final class ViewControl {
      * @param view
      */
     public static void display(final ViewInterface view) {
-        ViewControl.VIEWS.add(view);
+        ViewController.VIEWS.add(view);
     }
 
     /**
@@ -85,7 +55,7 @@ public final class ViewControl {
      * @return
      */
     public static boolean hasViews() {
-        return ViewControl.VIEWS.size() > 0;
+        return ViewController.VIEWS.size() > 0;
     }
 
     /**
@@ -94,13 +64,13 @@ public final class ViewControl {
      * @return
      */
     public static ViewInterface getCurrentView() {
-        return ViewControl.VIEWS.get(ViewControl.VIEWS.size() - 1);
+        return ViewController.VIEWS.get(ViewController.VIEWS.size() - 1);
     }
 
     /**
      * Removes the last ViewInterface from the underlying ArrayList.
      */
     public static void quitCurrentView() {
-        ViewControl.VIEWS.remove(ViewControl.VIEWS.size() - 1);
+        ViewController.VIEWS.remove(ViewController.VIEWS.size() - 1);
     }
 }
