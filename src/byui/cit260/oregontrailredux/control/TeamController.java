@@ -2,16 +2,23 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Team;
 
-public final class TeamController implements ControllerInterface {
+public final class TeamController {
 
     private final Team team;
 
-    public TeamController() {
-        this.team = new Team();
-    }
 
     public TeamController(final Team team) {
         this.team = team;
+    }
+    
+
+    public static Team create() {
+        Team newTeam = new Team();
+
+        newTeam.setWagon(WagonController.create());
+        newTeam.setMoney(500);
+        
+        return newTeam;
     }
 
     public boolean canTravel() {
@@ -23,21 +30,6 @@ public final class TeamController implements ControllerInterface {
                 && this.hasOxen()
                 && oc.canPull()
                 && oc.canPullWeight(wc.calculateTotalWeight());
-    }
-
-    @Override
-    public Team create() {
-        Team newTeam = new Team();
-
-        newTeam.setWagon(new WagonController().create());
-        newTeam.setMoney(500);
-        
-        return newTeam;
-    }
-
-    @Override
-    public Team getResource() {
-        return this.team;
     }
 
     public boolean hasOxen() {

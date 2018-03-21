@@ -10,19 +10,19 @@ import byui.cit260.oregontrailredux.model.enums.Pace;
  *
  * @author Connor
  */
-public final class PaceMenu extends AbstractMenu implements ViewInterface {
+public final class SelectPaceMenu extends AbstractMenu implements ViewInterface {
 
     /**
      * The default constructor.
      */
-    public PaceMenu() {
+    public SelectPaceMenu() {
         this.title = "Select pace";
 
         for (final Pace pace : Pace.values()) {
             this.addOption(pace.symbol, pace.descriptor, () -> {
-                final Team team = new GameController().getResource().getTeam();
+                final Team team = GameController.getCurrentGame().getTeam();
                 team.setPace(pace);
-                ViewController.quitCurrentView();
+                ViewController.getInstance().quitCurrentView();
             });
         }
     }

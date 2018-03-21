@@ -58,7 +58,6 @@ public final class Inventory implements Serializable {
      */
     public void setQuantities(final int[] quantities) {
         this.quantities = quantities;
-        Output.println(Arrays.toString(this.quantities));
     }
     
     public int getValue(final Item type) {

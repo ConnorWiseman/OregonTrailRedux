@@ -2,6 +2,7 @@ package byui.cit260.oregontrailredux.model;
 
 import byui.cit260.oregontrailredux.model.enums.Profession;
 import byui.cit260.oregontrailredux.model.enums.Gender;
+import byui.cit260.oregontrailredux.model.enums.PersonType;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ public final class Person implements Serializable {
     private int age;
     private Gender gender;
     private Profession profession;
+    private PersonType type;
     private int hunger;
     private int health;
     private int huntingSkill;
@@ -28,6 +30,7 @@ public final class Person implements Serializable {
         this.age = 0;
         this.gender = Gender.NONE;
         this.profession = Profession.NONE;
+        this.type = PersonType.NONE;
         this.hunger = 0;
         this.health = 100;
         this.huntingSkill = 0;
@@ -84,6 +87,16 @@ public final class Person implements Serializable {
         this.profession = profession;
     }
 
+    public PersonType getType() {
+        return type;
+    }
+
+    public void setType(PersonType type) {
+        this.type = type;
+    }
+    
+    
+
     /**
      *
      * @return
@@ -134,15 +147,16 @@ public final class Person implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.name);
-        hash = 23 * hash + this.age;
-        hash = 23 * hash + Objects.hashCode(this.gender);
-        hash = 23 * hash + Objects.hashCode(this.profession);
-        hash = 23 * hash + this.hunger;
-        hash = 23 * hash + this.health;
-        hash = 23 * hash + this.huntingSkill;
-        hash = 23 * hash + this.gatheringSkill;
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + this.age;
+        hash = 89 * hash + Objects.hashCode(this.gender);
+        hash = 89 * hash + Objects.hashCode(this.profession);
+        hash = 89 * hash + Objects.hashCode(this.type);
+        hash = 89 * hash + this.hunger;
+        hash = 89 * hash + this.health;
+        hash = 89 * hash + this.huntingSkill;
+        hash = 89 * hash + this.gatheringSkill;
         return hash;
     }
 
@@ -179,13 +193,17 @@ public final class Person implements Serializable {
         if (this.gender != other.gender) {
             return false;
         }
-        return this.profession == other.profession;
+        if (this.profession != other.profession) {
+            return false;
+        }
+        return this.type == other.type;
     }
 
     @Override
     public String toString() {
-        return "Person{" + "name=" + name + ", age=" + age + ", gender=" + gender + ", profession=" + profession + ", hunger=" + hunger + ", health=" + health + ", huntingSkill=" + huntingSkill + ", gatheringSkill=" + gatheringSkill + '}';
+        return "Person{" + "name=" + name + ", age=" + age + ", gender=" + gender + ", profession=" + profession + ", type=" + type + ", hunger=" + hunger + ", health=" + health + ", huntingSkill=" + huntingSkill + ", gatheringSkill=" + gatheringSkill + '}';
     }
 
+    
     
 }

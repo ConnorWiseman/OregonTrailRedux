@@ -14,6 +14,7 @@ public final class HelpMenu extends AbstractMenu implements ViewInterface {
      */
     public HelpMenu() {
         this.title = "Help";
-        this.addOption('Q', "Quit help", () -> ViewController.quitCurrentView());
+        this.addOption('Q', "Quit help", ()
+                -> ViewController.getInstance().quitCurrentView());
     }
 }

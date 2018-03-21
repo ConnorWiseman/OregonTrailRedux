@@ -3,26 +3,16 @@ package byui.cit260.oregontrailredux.control;
 import byui.cit260.oregontrailredux.control.util.Random;
 import byui.cit260.oregontrailredux.model.Person;
 
-public final class PersonController implements ControllerInterface {
+public final class PersonController {
     
     private final Person person;
 
-    public PersonController() {
-        this.person = new Person();
-    }
-    
     public PersonController(final Person person) {
         this.person = person;
     }
     
-    @Override
-    public Object create() {
+    public static Person create() {
         return new Person();
-    }
-    
-    @Override
-    public Person getResource() {
-        return this.person;
     }
 
     public boolean isAlive() {
@@ -35,7 +25,7 @@ public final class PersonController implements ControllerInterface {
      * @param upper
      */
     public void setGatheringSkill(final int lower, final int upper) {
-        final double modifier = new GameController().getResource()
+        final double modifier = GameController.getCurrentGame()
                 .getDifficulty().modifier;
         final int l = (int) modifier * lower;
         final int u = (int) modifier * upper;
@@ -49,7 +39,7 @@ public final class PersonController implements ControllerInterface {
      * @param upper
      */
     public void setHuntingSkill(final int lower, final int upper) {
-        final double modifier = new GameController().getResource()
+        final double modifier = GameController.getCurrentGame()
                 .getDifficulty().modifier;
         final int l = (int) modifier * lower;
         final int u = (int) modifier * upper;

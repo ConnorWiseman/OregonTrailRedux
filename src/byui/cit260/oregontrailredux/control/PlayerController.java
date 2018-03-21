@@ -2,26 +2,17 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Player;
 
-public final class PlayerController implements ControllerInterface {
+public final class PlayerController {
     
     private final Player player;
 
-    public PlayerController() {
-        this.player = new Player();
-    }
     
     public PlayerController(final Player player) {
         this.player = player;
     }
 
-    @Override
-    public Player create() {
+    public static Player create() {
         return new Player();
-    }
-
-    @Override
-    public Player getResource() {
-        return this.player;
     }
 
 }

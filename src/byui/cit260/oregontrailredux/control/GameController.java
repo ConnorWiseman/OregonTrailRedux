@@ -17,7 +17,7 @@ import java.io.ObjectOutputStream;
  *
  * @author Connor
  */
-public final class GameController implements ControllerInterface {
+public final class GameController {
 
     private final static GameController INSTANCE = new GameController();
     private final static String SAVE_DIR = System.getProperty("user.home")
@@ -27,7 +27,7 @@ public final class GameController implements ControllerInterface {
 
     private final static Game CURRENT_GAME = new Game();
 
-    public GameController() {}
+    private GameController() {}
 
     /**
      * Makes the save directory.
@@ -41,6 +41,14 @@ public final class GameController implements ControllerInterface {
         } catch (SecurityException e) {
             // Log the exception?
         }
+    }
+    
+    public static Game getCurrentGame() {
+        return GameController.CURRENT_GAME;
+    }
+    
+    public static GameController getInstance() {
+        return GameController.INSTANCE;
     }
 
     /**
@@ -65,22 +73,7 @@ public final class GameController implements ControllerInterface {
 
         return GameController.CURRENT_GAME;
     }
-    
-    @Override
-    public Game create() {
-        return GameController.CURRENT_GAME;
-    }
-
-    /**
-     * Returns the current currentGame.
-     *
-     * @return
-     */
-    @Override
-    public Game getResource() {
-        return GameController.CURRENT_GAME;
-    }
-
+ 
     /**
      * Loads an existing currentGame from a save file.
      *
@@ -123,10 +116,11 @@ public final class GameController implements ControllerInterface {
      * understood.
      */
     public void startGame() {
-        ViewController.display(new StartMenu());
+        ViewController vc = ViewController.getInstance();
+        vc.display(new StartMenu());
 
-        while (ViewController.hasViews()) {
-            ViewInterface currentView = ViewController.getCurrentView();
+        while (vc.hasViews()) {
+            ViewInterface currentView = vc.getCurrentView();
 
             currentView.display();
             char choice = currentView.getInput();

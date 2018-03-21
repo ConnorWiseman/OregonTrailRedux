@@ -27,8 +27,10 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
         this.addOption('N', "New game", () -> this.startNewGame());
         this.addOption('L', "Load game", () -> this.loadGame());
         this.addOption('A', "About", () -> this.displayAbout());
-        this.addOption('H', "Help", () -> ViewController.display(new HelpMenu()));
-        this.addOption('E', "Exit", () -> ViewController.quitCurrentView());
+        this.addOption('H', "Help", ()
+                -> ViewController.getInstance().display(new HelpMenu()));
+        this.addOption('E', "Exit", ()
+                -> ViewController.getInstance().quitCurrentView());
     }
 
     /**
@@ -42,13 +44,13 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
      * Loads a previously saved game.
      */
     private void loadGame() {
-        final GameController gc = new GameController();
-        gc.loadGame();
+        GameController.getInstance().loadGame();
         
-        final String name = gc.getResource().getPlayer().getName();
+        final String name = GameController.getCurrentGame().getPlayer()
+                .getName();
         Output.println("Welcome back, " + name + "!");
         
-        ViewController.display(new GameMenu());
+        ViewController.getInstance().display(new GameMenu());
     }
 
     /**
@@ -58,16 +60,16 @@ public final class StartMenu extends AbstractMenu implements ViewInterface {
         try {
             final String name = Input.getString("Enter your name:");
             
-            final Game currentGame = new GameController().getResource();
+            final Game currentGame = GameController.getCurrentGame();
             
-            final Player player = new PlayerController().getResource();
+            final Player player = PlayerController.create();
             player.setName(name);
             
             currentGame.setPlayer(player);
-            currentGame.setMap(new MapController().create());
-            currentGame.setTeam(new TeamController().create());
+            currentGame.setMap(MapController.create());
+            currentGame.setTeam(TeamController.create());
             
-            ViewController.display(new DifficultyMenu());
+            ViewController.getInstance().display(new SelectDifficultyMenu());
         } catch (IOException e) {
             // Log the exception?
         }

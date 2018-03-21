@@ -5,37 +5,28 @@ import byui.cit260.oregontrailredux.model.Person;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class CompanionsController implements ControllerInterface {
+public class CompanionsController {
     private final Companions companions;
-    
-    public CompanionsController() {
-        this.companions = new Companions();
-    }
     
     public CompanionsController(final Companions companions) {
         this.companions = companions;
     }
     
+    public static Companions create() {
+        return new Companions();
+    }
+    
     public void add(final String name, final int age) {
-        PersonController pc = new PersonController();
+        Person companion = PersonController.create();
+        
+        PersonController pc = new PersonController(companion);
         pc.setHuntingSkill(3, 5);
         pc.setGatheringSkill(3, 5);
 
-        Person companion = pc.getResource();
         companion.setName(name);
         companion.setAge(age);
 
         this.companions.getMembers().add(companion);
-    }
-    
-    @Override
-    public Object create() {
-        return new Companions();
-    }
-    
-    @Override
-    public Companions getResource() {
-        return this.companions;
     }
     
     public void removeDead() {

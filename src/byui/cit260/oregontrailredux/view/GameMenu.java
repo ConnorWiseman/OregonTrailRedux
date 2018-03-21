@@ -19,13 +19,16 @@ public final class GameMenu extends AbstractMenu implements ViewInterface {
     public GameMenu() {
         this.title = "Play";
         this.addOption('D', "Debug info", () -> this.displayDebugInfo());
-        this.addOption('P', "Set pace", () -> ViewController.display(new PaceMenu()));
-        this.addOption('M', "Check map", () -> this.displayMap());
+        this.addOption('P', "Set pace", () -> ViewController.getInstance()
+                .display(new SelectPaceMenu()));
+        this.addOption('M', "Check map", ()
+                -> MapPrinter.print(GameController.getCurrentGame().getMap()));
         this.addOption('S', "Save game", () -> this.saveGame());
         this.addOption('Q', "Quit", () -> {
-            ViewController.confirm("Do you really want to quit?",
-                    () -> ViewController.quitCurrentView(),
-                    () -> ViewController.changeTo(new GameMenu()));
+            ViewController.getInstance().confirm("Do you really want to quit?",
+                    () -> ViewController.getInstance().quitCurrentView(),
+                    () -> ViewController.getInstance()
+                            .changeTo(new GameMenu()));
         });
     }
 
@@ -33,7 +36,7 @@ public final class GameMenu extends AbstractMenu implements ViewInterface {
      * Displays debug information.
      */
     private void displayDebugInfo() {
-        Game currentGame = new GameController().getResource();
+        Game currentGame = GameController.getCurrentGame();
         Output.println(currentGame.getPlayer());
         Output.println("Difficulty{mode=" + currentGame.getDifficulty() + "}");
         Output.println(currentGame.getTeam().getLeader());
@@ -41,19 +44,12 @@ public final class GameMenu extends AbstractMenu implements ViewInterface {
         Output.println(currentGame.getTeam().getOxen());
         Output.println(currentGame.getTeam().getWagon());
     }
-    
-    /**
-     * Displays the map.
-     */
-    private void displayMap() {
-        MapPrinter.print(new GameController().getResource().getMap());
-    }
 
     /**
      * Saves the current game.
      */
     private void saveGame() {
-        new GameController().saveGame();
+        GameController.getInstance().saveGame();
         Output.println("The game was saved successfully!");
     }
 }

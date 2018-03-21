@@ -2,16 +2,16 @@ package byui.cit260.oregontrailredux.control;
 
 import byui.cit260.oregontrailredux.model.Point;
 
-public final class PointController implements ControllerInterface {
+public final class PointController  {
     
     private final Point point;
-
-    public PointController() {
-        this.point = new Point();
-    }
     
     public PointController(final Point point) {
         this.point = point;
+    }
+    
+    public static Point create() {
+        return new Point();
     }
 
     public static double distanceBetween(final Point p1, final Point p2) {
@@ -22,18 +22,8 @@ public final class PointController implements ControllerInterface {
 
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
-    
-    @Override
-    public Point create() {
-        return new Point();
-    }
-    
+
     public double distanceTo(final Point p2) {
         return PointController.distanceBetween(this.point, p2);
-    }
-    
-    @Override
-    public Point getResource() {
-        return this.point;
     }
 }

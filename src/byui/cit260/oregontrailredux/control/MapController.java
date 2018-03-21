@@ -7,27 +7,24 @@ import byui.cit260.oregontrailredux.model.enums.LocationType;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
-public final class MapController implements ControllerInterface {
+public final class MapController {
 
     private final Map map;
-
-    public MapController() {
-        this.map = new Map();
-    }
 
     public MapController(final Map map) {
         this.map = map;
     }
 
-    @Override
-    public Map create() {
+    public static Map create() {
         final Map newMap = new Map();
 
         newMap.setCurrentPosition(new Point(19, 0));
         newMap.setNumColumns(20);
         newMap.setNumRows(11);
-        this.fill(newMap);
-        this.populate(newMap);
+        
+        MapController mc = new MapController(newMap);
+        mc.fill(newMap);
+        mc.populate(newMap);
 
         return newMap;
     }
@@ -40,11 +37,6 @@ public final class MapController implements ControllerInterface {
                 locations.put(new Point(x, y), new Location());
             });
         });
-    }
-
-    @Override
-    public Map getResource() {
-        return this.map;
     }
 
     public boolean isValidPoint(final Point point) {

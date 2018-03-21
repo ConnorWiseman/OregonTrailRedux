@@ -1,9 +1,10 @@
 package byui.cit260.oregontrailredux.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public final class Companions {
+public final class Companions implements Serializable {
 
     private ArrayList<Person> members;
 

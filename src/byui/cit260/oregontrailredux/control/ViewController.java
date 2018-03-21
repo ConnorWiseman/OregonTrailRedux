@@ -12,9 +12,14 @@ import java.util.ArrayList;
  */
 public final class ViewController {
 
-    private static final ArrayList<ViewInterface> VIEWS = new ArrayList<>();
+    private static final ViewController INSTANCE = new ViewController();
+    
+    private final ArrayList<ViewInterface> VIEWS = new ArrayList<>();
 
-    private ViewController() {
+    private ViewController() {}
+    
+    public static ViewController getInstance() {
+        return ViewController.INSTANCE;
     }
     
     /**
@@ -22,9 +27,9 @@ public final class ViewController {
      *
      * @param view
      */
-    public static void changeTo(final ViewInterface view) {
-        ViewController.quitCurrentView();
-        ViewController.display(view);
+    public void changeTo(final ViewInterface view) {
+        this.quitCurrentView();
+        this.display(view);
     }
 
     /**
@@ -35,9 +40,9 @@ public final class ViewController {
      * @param y
      * @param n
      */
-    public static void confirm(final String prompt, final Runnable y,
+    public void confirm(final String prompt, final Runnable y,
             final Runnable n) {
-        ViewController.changeTo(new ConfirmMenu(prompt, y, n));
+        this.changeTo(new ConfirmMenu(prompt, y, n));
     }
 
     /**
@@ -45,8 +50,8 @@ public final class ViewController {
      *
      * @param view
      */
-    public static void display(final ViewInterface view) {
-        ViewController.VIEWS.add(view);
+    public void display(final ViewInterface view) {
+        this.VIEWS.add(view);
     }
 
     /**
@@ -54,8 +59,8 @@ public final class ViewController {
      *
      * @return
      */
-    public static boolean hasViews() {
-        return ViewController.VIEWS.size() > 0;
+    public boolean hasViews() {
+        return this.VIEWS.size() > 0;
     }
 
     /**
@@ -63,14 +68,14 @@ public final class ViewController {
      *
      * @return
      */
-    public static ViewInterface getCurrentView() {
-        return ViewController.VIEWS.get(ViewController.VIEWS.size() - 1);
+    public ViewInterface getCurrentView() {
+        return this.VIEWS.get(this.VIEWS.size() - 1);
     }
 
     /**
      * Removes the last ViewInterface from the underlying ArrayList.
      */
-    public static void quitCurrentView() {
-        ViewController.VIEWS.remove(ViewController.VIEWS.size() - 1);
+    public void quitCurrentView() {
+        this.VIEWS.remove(this.VIEWS.size() - 1);
     }
 }

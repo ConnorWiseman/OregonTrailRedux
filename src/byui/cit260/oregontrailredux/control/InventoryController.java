@@ -9,18 +9,22 @@ import java.util.function.Function;
  *
  * @author Connor
  */
-public final class InventoryController implements ControllerInterface {
+public final class InventoryController {
 
     private final Inventory inventory;
-
-    public InventoryController() {
-        this.inventory = new Inventory();
-    }
 
     public InventoryController(final Inventory inventory) {
         this.inventory = inventory;
     }
 
+    public static Inventory create() {
+        final Inventory newInventory = new Inventory();
+
+        newInventory.setQuantities(new int[Item.values().length]);
+
+        return newInventory;
+    }
+    
     /**
      * Adds the specified quantity of the specified type of item to the
      * specified inventory.
@@ -33,19 +37,7 @@ public final class InventoryController implements ControllerInterface {
         this.inventory.setQuantity(type, newQuantity);
     }
 
-    /**
-     * Creates and initializes a new Inventory instance.
-     *
-     * @return
-     */
-    @Override
-    public Inventory create() {
-        final Inventory newInventory = new Inventory();
 
-        newInventory.setQuantities(new int[Item.values().length]);
-
-        return newInventory;
-    }
 
     /**
      * Returns true if the specified inventory contains at least the specified
@@ -57,11 +49,6 @@ public final class InventoryController implements ControllerInterface {
      */
     public boolean has(final int quantity, final Item type) {
         return this.inventory.getQuantity(type) >= quantity;
-    }
-
-    @Override
-    public Inventory getResource() {
-        return this.inventory;
     }
 
     /**

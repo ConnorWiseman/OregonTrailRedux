@@ -11,18 +11,28 @@ import java.util.function.Function;
  *
  * @author Connor
  */
-public final class OxenController implements ControllerInterface {
+public final class OxenController {
 
     private final Oxen oxen;
 
-    public OxenController() {
-        this.oxen = new Oxen();
-    }
 
     public OxenController(final Oxen oxen) {
         this.oxen = oxen;
     }
 
+    /**
+     * Creates a pair of Oxen.
+     *
+     * @return
+     */
+    public static Oxen create() {
+        final Oxen newOxen = new Oxen();
+
+        newOxen.set(OxPosition.LEFT, OxController.create());
+        newOxen.set(OxPosition.RIGHT, OxController.create());
+
+        return newOxen;
+    }
 
     public int sum(final Function<Ox, Integer> method) {
         int total = 0;
@@ -97,26 +107,5 @@ public final class OxenController implements ControllerInterface {
         }
 
         return num;
-    }
-
-    /**
-     * Creates a pair of Oxen.
-     *
-     * @return
-     */
-    @Override
-    public Oxen create() {
-        final Oxen newOxen = new Oxen();
-        final OxController oc = new OxController();
-
-        newOxen.set(OxPosition.LEFT, oc.create());
-        newOxen.set(OxPosition.RIGHT, oc.create());
-
-        return newOxen;
-    }
-
-    @Override
-    public Oxen getResource() {
-        return this.oxen;
     }
 }

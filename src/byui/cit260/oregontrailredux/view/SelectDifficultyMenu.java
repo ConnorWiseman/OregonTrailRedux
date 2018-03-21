@@ -2,7 +2,9 @@ package byui.cit260.oregontrailredux.view;
 
 import byui.cit260.oregontrailredux.control.GameController;
 import byui.cit260.oregontrailredux.control.ViewController;
+import byui.cit260.oregontrailredux.model.Person;
 import byui.cit260.oregontrailredux.model.enums.Difficulty;
+import byui.cit260.oregontrailredux.model.enums.PersonType;
 
 /**
  * A menu used to select the difficulty level of a new game. Not intended to be
@@ -11,18 +13,22 @@ import byui.cit260.oregontrailredux.model.enums.Difficulty;
  *
  * @author Connor
  */
-public final class DifficultyMenu extends AbstractMenu implements ViewInterface {
+public final class SelectDifficultyMenu extends AbstractMenu implements ViewInterface {
 
     /**
      * The default constructor.
      */
-    public DifficultyMenu() {
+    public SelectDifficultyMenu() {
         this.title = "Select difficulty";
 
         for (final Difficulty mode : Difficulty.values()) {
             this.addOption(mode.symbol, mode.descriptor, () -> {
-                new GameController().getResource().setDifficulty(mode);
-                ViewController.changeTo(new CustomizeLeaderMenu());
+                GameController.getCurrentGame().setDifficulty(mode);
+                Person leader = GameController.getCurrentGame().getTeam()
+                        .getLeader();
+                leader.setType(PersonType.LEADER);
+                ViewController.getInstance()
+                        .changeTo(new CustomizePersonMenu(leader));
             });
         }
     }
